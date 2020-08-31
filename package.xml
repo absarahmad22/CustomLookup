@@ -8,6 +8,6 @@
     <name>ApexClass</name>
     <members>CustomLookupController</members>
     <members>CustomLookupControllerTest</members>
-  </type>
+  </types>
   <version>49.0</version>
 </Package>

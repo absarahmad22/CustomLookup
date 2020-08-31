@@ -1,5 +1,5 @@
 @isTest
-public class CustomLookupController {
+public class CustomLookupControllerTest {
 	@isTest
     public static void test_one(){
         Account account = new Account(
@@ -25,7 +25,8 @@ public class CustomLookupController {
         INSERT contact;
 
         System.assertEquals(null,CustomLookupController.searchResultApex(null,null));
-        System.assertEquals('Burlington Textiles Corp of America',CustomLookupController.searchResultApex(account.Id,'Account').Name);
-        System.assertEquals(contact.Id,CustomLookupController.searchResultApex('jack','Contact').Id);
+        System.assertEquals('Burlington Textiles Corp of America',CustomLookupController.searchResultApex(account.Id,null)[0].get('Name'));
+        System.assertEquals(contact.Id,CustomLookupController.searchResultApex('jack','Contact')[0].get('Id'));
+        System.assertEquals('Contact',CustomLookupController.getObjectApiName(contact.Id));
     }
 }
