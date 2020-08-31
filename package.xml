@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <types>
+    <name>AuraDefinitionBundle</name>
+    <members>CustomLookup</members>
+  </types>
+  <types>
+    <name>ApexClass</name>
+    <members>CustomLookupController</members>
+    <members>CustomLookupControllerTest</members>
+  </type>
+  <version>49.0</version>
+</Package>

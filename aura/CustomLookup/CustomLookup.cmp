@@ -1,0 +1,71 @@
+<aura:component
+                controller="CustomLookupController"
+                implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId"
+                access="global" >
+    
+    <aura:attribute name="records" type="Object[]" />
+    <aura:attribute name="value" type="String" />
+    <aura:attribute name="label" type="String" default="Name" />
+    <aura:attribute name="searchStr" type="String" />
+    <aura:attribute name="objectApiNames" type="String" />
+    <aura:attribute name="selectedObject" type="String" />
+    <aura:attribute name="objectNames" type="String[]" />
+    <aura:attribute name="iconName" type="String" default="standard:account" />
+    <aura:attribute name="showIconName" type="Object" default="false" />
+    <aura:attribute name="errrorMessage" type="String" default="Complete this field." />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox" aura:id="mycombobox">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_3-of-12">
+                            <lightning:select name="Object" label="Object" variant="label-stacked" value="{!v.selectedObject}" onchange="{!c.clearLookup}">
+                                <aura:iteration items="{!v.objectNames}" var="val">
+                                    <option value="{!val}" selected="{!v.selectedObject == val}">{!val}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                        <div class="slds-col slds-size_9-of-12">
+                            <label class="slds-form-element__label" for="combobox-id-3">{!v.label}</label>
+                            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                <lightning:input aura:id="searchInput"  aria-activedescendant="option1"  aria-autocomplete="list" aria-controls="listbox-id-3"  autoComplete="off"  role="textbox"  placeholder="Search..." variant="label-hidden" value="{!v.searchStr}" onchange="{!c.searchResult}" onblur="{!c.hideResult}"/>
+                                <span  class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                    <div role="status" aura:id="spinner" class="slds-hide slds-spinner slds-spinner_brand slds-spinner_x-small slds-input__spinner">
+                                        <span class="slds-assistive-text">Loading</span>
+                                        <div class="slds-spinner__dot-a"></div>
+                                        <div class="slds-spinner__dot-b"></div>
+                                    </div>
+                                    <aura:if isTrue="{!v.showIconName}"><lightning:icon aura:id="searchIcon" iconName="utility:search" size="x-small"/></aura:if>
+                                </span>
+                            </div>
+                            <div class="slds-hide  form-element__help" style="color: #c23934;" aura:id="errormsg">{!v.errrorMessage}</div>
+                        </div>
+                    </div>
+                    
+                    <div id="listbox-id-3" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                            <aura:iteration items="{!v.records}" var="record">
+                                <li role="presentation" class="slds-listbox__item" data-id="{!record.Id}" data-name="{!record.Name}" onclick="{!c.selectValue}">
+                                    <div id="option1" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                        <span class="slds-media__figure slds-listbox__option-icon">
+                                            <span class="slds-icon_container slds-icon-standard-account">
+                                                <lightning:icon iconName="{!v.iconName}" size="small" variant="inverse"/>
+                                            </span>
+                                        </span>
+                                        <span class="slds-media__body">
+                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity">{!record.Name}</span>
+                                            <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">{!record.Name}</span>
+                                        </span>
+                                    </div>
+                                </li>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+</aura:component>
